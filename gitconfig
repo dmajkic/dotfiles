@@ -1,0 +1,35 @@
+[merge]
+	tool = vimdiff
+[user]
+	name = Dusan D. Majkic
+	email = dmajkic@lovor.net
+[core]
+	editor = vim
+	autocrlf = false
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[github]
+	user = dmajkic
+
+[http]
+	sslverify = false
+
+[alias]
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  le = log --oneline --decorate
+  l =  log --pretty=format:"%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  la = "!git config -l | grep alias | cut -c 7-"
+
+  fl = log -u
+
+  dlc = diff --cached HEAD^
+	up = pull --ff-only --all -p
+
+[push]
+	default = simple

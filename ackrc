@@ -1,0 +1,10 @@
+# Always sort the files
+#--sort-files
+
+# Always color, even if piping to a another program
+--color
+
+# Use "less -r" as my pager
+# --pager="c:\Program Files (x86)\Git\bin\less.exe" -r
+
+--ignore-dir=rails

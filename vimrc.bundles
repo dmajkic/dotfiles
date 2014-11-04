@@ -1,0 +1,96 @@
+if &compatible
+  set nocompatible
+end
+
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" Let Vundle manage Vundle
+Plugin 'gmarik/Vundle.vim'
+
+" Non janus
+Plugin 'bling/vim-airline'
+Plugin 'vim-scripts/tComment'
+" Plugin 'fatih/vim-go'
+Plugin 'Blackrush/vim-gocode'
+Plugin 'rjohnsondev/vim-compiler-go'
+Bundle 'ntpeters/vim-better-whitespace'
+Plugin 'esneider/YUNOcommit.vim'
+Plugin 'jnurmine/Zenburn'
+Plugin 'Rykka/colorv.vim'
+
+" Colors
+Plugin 'vim-scripts/Colour-Sampler-Pack'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-vividchalk'
+Plugin 'vim-scripts/molokai'
+Plugin 'telamon/vim-color-github'
+Plugin 'TechnoGate/janus-colors'
+Plugin 'chriskempson/base16-vim'
+
+" Languages
+Plugin 'tpope/vim-haml'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tpope/vim-cucumber'
+Plugin 'tpope/vim-markdown'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'ajf/puppet-vim'
+Plugin 'rosstimson/scala-vim-support'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-git'
+Plugin 'timcharper/textile.vim'
+Plugin 'skwp/vim-rspec'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'chrisbra/csv.vim'
+Plugin 'mmalecki/vim-node.js'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/Arduino-syntax-file'
+Plugin 'groenewege/vim-less'
+Plugin 'wlangstroth/vim-haskell'
+Plugin 'slim-template/vim-slim'
+Plugin 'jimenezrick/vimerl'
+Plugin 'sunaku/vim-ruby-minitest'
+Plugin 'guns/vim-clojure-static'
+Plugin 'elixir-lang/vim-elixir'
+"Plugin 'jnwhiteh/vim-golang'
+Plugin 'tpope/vim-liquid'
+Plugin 'depuracao/vim-rdoc'
+
+" Tools
+Plugin 'tpope/vim-unimpaired'
+"Plugin 'scrooloose/nerdcommenter'
+Plugin 'edsono/vim-matchit'
+Plugin 'ervandew/supertab'
+Plugin 'itspriddle/ZoomWin'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'garbas/vim-snipmate'
+Plugin 'tomtom/tlib_vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'scrooloose/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'scrooloose/nerdtree'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'tpope/vim-endwise'
+Plugin 'mattn/gist-vim'
+Plugin 'vim-scripts/vimwiki'
+Plugin 'ap/vim-css-color'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'chrisbra/NrrwRgn'
+Plugin 'jeetsukumaran/vim-buffergator'
+" Plugin 'rgarver/Kwbd.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'skalnik/vim-vroom'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-repeat'
+Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-dispatch'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'thinca/vim-visualstar'
+
+call vundle#end()
+filetype on
