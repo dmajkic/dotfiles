@@ -161,8 +161,8 @@ endif
 nnoremap ; :
 nnoremap č :
 nnoremap Č :
-command Wq wq
-command Q q
+command! Wq wq
+command! Q q
 map <F1> <Esc>
 imap <F1> <Esc>
 
@@ -180,8 +180,10 @@ let NERDTreeChDirMode=2
 let NERDTreeIgnore = ['\.pyc$', '\.ntx$', '\.dbf$', '\.dbt$', '\.DBF$', '\.NTX$', '\.DBT$', '\.NTX$', '\.ntx$']
 nmap <leader>n :NERDTreeToggle<CR>
 
-" Command-Shift-F for Ack
-map <C-S-f> :Ack<space>
+" Custom ignores for CtrlP
+let g:ctrlp_custom_ignore = '\v.DS_Store|.sass-cache|.bundle|dcu|log|tmp|.git|private|.hg|.svn|node_modules|vendor|bower_components$'
+" Command-F for Ack
+map <C-f> :Ack<space>
 
 "Rails on main menu"
 let g:rails_menu=1
