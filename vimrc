@@ -111,7 +111,7 @@ if has("gui_running")
   highlight LineNr guibg=#333333
 
   if has("gui_gtk2")
-    set guifont=Source\ Code\ Pro\ for\ Powerline\ 13
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
   elseif has("gui_macvim")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
   elseif has("gui_win32")
