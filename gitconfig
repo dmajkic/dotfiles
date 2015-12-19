@@ -1,5 +1,5 @@
 [merge]
-	tool = vimdiff
+	tool = kdiff3
 [user]
 	name = Dusan D. Majkic
 	email = dmajkic@lovor.net
