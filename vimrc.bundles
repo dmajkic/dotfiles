@@ -12,13 +12,14 @@ Plugin 'gmarik/Vundle.vim'
 " Non janus
 Plugin 'bling/vim-airline'
 Plugin 'vim-scripts/tComment'
-" Plugin 'fatih/vim-go'
-Plugin 'Blackrush/vim-gocode'
-Plugin 'rjohnsondev/vim-compiler-go'
+Plugin 'fatih/vim-go'
+"Plugin 'Blackrush/vim-gocode'
+"Plugin 'rjohnsondev/vim-compiler-go'
 Bundle 'ntpeters/vim-better-whitespace'
 Plugin 'esneider/YUNOcommit.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'Rykka/colorv.vim'
+Plugin 'Valloric/YouCompleteMe'
 
 " Colors
 Plugin 'vim-scripts/Colour-Sampler-Pack'
