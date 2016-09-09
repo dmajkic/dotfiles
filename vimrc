@@ -108,7 +108,7 @@ colorscheme railscasts
 if has("gui_running")
 
   "highlight Comment guifg=#667b8f
-  highlight LineNr guibg=#333333
+  highlight LineNr guibg=#111111
 
   if has("gui_gtk2")
     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
@@ -116,7 +116,7 @@ if has("gui_running")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
   elseif has("gui_win32")
    " set guifont=Lucida_Sans_Typewriter:h14
-    set guifont=Sauce_Code_Powerline:h14
+    set guifont=Sauce_Code_Powerline:h13
   endif
 
   set lines=40 columns=117
@@ -196,6 +196,12 @@ inoremap <silent> <C-S> <C-O>:update<CR>
 
 "mark syntax errors with :signs
 let g:syntastic_enable_signs=1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 " same indent behaviour in visual mode
 vmap > >gv
@@ -210,10 +216,7 @@ map <silent> <PageDown> 1000<C-D>
 imap <silent> <PageUp> <C-O>1000<C-U>
 imap <silent> <PageDown> <C-O>1000<C-D>
 
-" Go support
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabLongestHighlight = 0
-
+" Build commnad to feed muscle memory
 nmap <F5> :make<CR>:copen<CR>
 nmap <C-B> :make<CR>:copen<CR>
 
@@ -229,4 +232,12 @@ nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`' " Swap two words
 nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>              " Underline the current line with '='
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>         " find merge conflict markers
 cmap <C-P> <C-R>=expand("%:p:h") . "/"                         " current dir into a command-line path
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+  nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>
+
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
