@@ -234,10 +234,13 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>         " find merge conf
 cmap <C-P> <C-R>=expand("%:p:h") . "/"                         " current dir into a command-line path
 
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+  "let g:ackprg = 'ag --vimgrep'
   nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>
-
+  let g:ackprg="ag --nogroup --nocolor --column"
+  set grepformat=%f:%l%c%m
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
 endif
 
+" Enter to select on autocomplete
+inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
