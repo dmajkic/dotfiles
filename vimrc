@@ -242,5 +242,3 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
 endif
 
-" Enter to select on autocomplete
-inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
