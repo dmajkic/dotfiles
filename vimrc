@@ -243,4 +243,4 @@ if executable('ag')
 endif
 
 " Enter to select on autocomplete
-inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
