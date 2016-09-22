@@ -104,6 +104,9 @@ augroup END
 
 " Color scheme
 colorscheme railscasts
+highlight LineNr guibg=#111111 ctermfg=DarkGrey
+highlight CursorLineNr guibg=Grey ctermfg=Grey
+set cursorline
 
 if has("gui_running")
 
@@ -120,7 +123,6 @@ if has("gui_running")
   endif
 
   set lines=40 columns=117
-  set cursorline
   set guioptions-=T  " No toolbar
   set guioptions+=c  " Use console dialogs
 endif
@@ -198,7 +200,7 @@ inoremap <silent> <C-S> <C-O>:update<CR>
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_ruby_checkers = ['mri']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -241,4 +243,13 @@ if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor\ --column
 endif
+
+" RSpec.vim mappings
+map <Leader>t :Runner<CR>
+
+" Windows compatibilitty
+nnoremap <C-Home> gg
+nnoremap <C-End> G<End>
+inoremap <C-Home> <Esc>ggi
+inoremap <C-End> <Esc>G<End>i
 
