@@ -24,6 +24,10 @@ set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 set nowrap        " No wraping
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
 set smartcase     " Incsearch smarcase, if lower=ci
 
 " Switch syntax highlighting on, when the terminal has colors
