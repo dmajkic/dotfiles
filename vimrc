@@ -24,6 +24,7 @@ set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 set nowrap        " No wraping
+set smartcase     " Incsearch smarcase, if lower=ci
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -119,8 +120,13 @@ if has("gui_running")
   endif
 
   set lines=40 columns=117
+  set cursorline
   set guioptions-=T  " No toolbar
   set guioptions+=c  " Use console dialogs
+else
+  if $TMUX != ""
+    set t_ut=
+  endif
 endif
 
 " Tab completion: tab at beginning of line,
@@ -156,6 +162,11 @@ if has("gui_running") || (&t_Co > 100)
 endif
 
 " fixes common typos; Mapira č, ; i Č u : za komande
+nnoremap - /
+nnoremap š [
+nnoremap đ ]
+nnoremap Š {
+nnoremap Đ }
 nnoremap ; :
 nnoremap č :
 nnoremap Č :
@@ -193,13 +204,13 @@ vnoremap <silent> <C-S> <C-C>:update<CR>
 inoremap <silent> <C-S> <C-O>:update<CR>
 
 "mark syntax errors with :signs
-let g:syntastic_enable_signs=1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_ruby_checkers = ['mri']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"let g:syntastic_enable_signs=1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_ruby_checkers = ['mri']
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 " same indent behaviour in visual mode
 vmap > >gv
@@ -213,6 +224,18 @@ map <silent> <PageUp> 1000<C-U>
 map <silent> <PageDown> 1000<C-D>
 imap <silent> <PageUp> <C-O>1000<C-U>
 imap <silent> <PageDown> <C-O>1000<C-D>
+
+" Leader p and Leader y for system copy-paste
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" v-v-v expand selection
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " Build commnad to feed muscle memory
 nmap <F5> :make<CR>:copen<CR>
@@ -240,13 +263,55 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor\ --column
 endif
 
-" RSpec.vim mappings
-map <Leader>t :Runner<CR>
+" Javascripting
+let g:jsx_ext_required = 0
+"let g:syntastic_javascript_checkers = ['eslint']
 
-" Windows compatibilitty
-nnoremap <C-Home> gg
-nnoremap <C-End> G<End>
-inoremap <C-Home> <Esc>ggi
-inoremap <C-End> <Esc>G<End>i
+" ALE
+let g:ale_completion_enabled = 1
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
 
-let g:ycm_server_python_interpreter="/usr/bin/python2"
+" Lightline
+let g:lightline = {
+\ 'colorscheme': 'wombat',
+\ 'active': {
+\   'left': [['mode', 'paste'], ['filename', 'modified']],
+\   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\ },
+\ 'component_expand': {
+\   'linter_warnings': 'LightlineLinterWarnings',
+\   'linter_errors': 'LightlineLinterErrors',
+\   'linter_ok': 'LightlineLinterOK'
+\ },
+\ 'component_type': {
+\   'readonly': 'error',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error'
+\ },
+\ }
+
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓ ' : ''
+endfunction
+
+map <C-p> :Files<CR>
