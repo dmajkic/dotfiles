@@ -79,10 +79,6 @@ augroup vimrcEx
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" | endif
 
-  " Cucumber navigation commands
-  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
-  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
-
   " Enable spellchecking for Markdown
   autocmd FileType markdown setlocal spell
 
@@ -114,7 +110,7 @@ if has("gui_running")
   highlight LineNr guibg=#111111
 
   if has("gui_gtk2")
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 13
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
   elseif has("gui_macvim")
     set guifont=Source\ Code\ Pro\ for\ Powerline:h16
   elseif has("gui_win32")
@@ -253,3 +249,4 @@ nnoremap <C-End> G<End>
 inoremap <C-Home> <Esc>ggi
 inoremap <C-End> <Esc>G<End>i
 
+let g:ycm_server_python_interpreter="/usr/bin/python2"
