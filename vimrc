@@ -314,4 +314,4 @@ function! LightlineLinterOK() abort
   return l:counts.total == 0 ? '✓ ' : ''
 endfunction
 
-map <C-p> :Files<CR>
+map <C-p> :GFiles<CR>
