@@ -9,106 +9,91 @@ call vundle#begin()
 " Let Vundle manage Vundle
 Plugin 'gmarik/Vundle.vim'
 
-" Non janus
-"Plugin 'bling/vim-airline'
-Plugin 'itchyny/lightline.vim'
-Plugin 'vim-scripts/tComment'
-Plugin 'fatih/vim-go'
-Bundle 'ntpeters/vim-better-whitespace'
-Plugin 'esneider/YUNOcommit.vim'
-Plugin 'jnurmine/Zenburn'
-"Plugin 'Rykka/colorv.vim'
-Plugin 'terryma/vim-expand-region'
+" Core plugins
+Plugin 'majutsushi/tagbar'              " Tags, mounted on F10
+Plugin 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
+Plugin 'junegunn/fzf'                   " Fuzzy find using fzf, Ctrl+P,F,X
+Plugin 'junegunn/fzf.vim'               " fzf interface (alt. CtrlP)
+Plugin 'mileszs/ack.vim'                " Find in files, Ag
+Plugin 'Valloric/YouCompleteMe'         " Completer
+"Plugin 'ajh17/VimCompletesMe'          " Tab completition
+Plugin 'tpope/vim-fugitive'             " Git integration
+Plugin 'airblade/vim-gitgutter'         " Git changes in gutter
+Plugin 'tpope/vim-git'                  " Git commands
+Plugin 'tpope/vim-dispatch'             " :Make and :Dispatch for tmux dispatching
+Plugin 'itchyny/lightline.vim'          " Status bar (alt. powerline, airline)
+Plugin 'vim-scripts/tComment'           " Commenter, mounted on ctrl+_,ctrl+_
+Plugin 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
+Plugin 'honza/vim-snippets'             " Snippets library
+Plugin 'ntpeters/vim-better-whitespace' " Whitespace, strip with <leader><Space>
+Plugin 'thinca/vim-visualstar'          " Search word, mounted on *
+Plugin 'terryma/vim-expand-region'      " v-v-v expand region
+
+if v:version < 800
+  Plugin 'scrooloose/syntastic'         " Linter for vim 7 (alt. ALE)
+else
+  Plugin 'w0rp/ale'                     " Async Linter (alt. syntastic)
+endif
 
 " Colors
-Plugin 'vim-scripts/Colour-Sampler-Pack'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'nanotech/jellybeans.vim'
 Plugin 'tpope/vim-vividchalk'
 Plugin 'vim-scripts/molokai'
+Plugin 'jnurmine/Zenburn'
 Plugin 'telamon/vim-color-github'
+Plugin 'vim-scripts/Colour-Sampler-Pack'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'TechnoGate/janus-colors'
 Plugin 'chriskempson/base16-vim'
 
-" Languages
+" Ruby
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-rails'
+Plugin 'skwp/vim-rspec'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'tpope/vim-surround'           " Surround with cs<quote><quote>
+Plugin 'tpope/vim-endwise'            " Autoinsert end, endif, ...
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-haml'
-Plugin 'skwp/vim-rspec'
+Plugin 'tpope/vim-liquid'
 Plugin 'sunaku/vim-ruby-minitest'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'depuracao/vim-rdoc'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'ngmy/vim-rubocop'
 
+" Javascript, Ember, React
 Plugin 'pangloss/vim-javascript'
+"Plugin 'othree/javascript-libraries-syntax'  " JS Libs syntax (jquery, react, vudle...)
+Plugin 'AndrewRadev/ember_tools.vim'          " Ember support, gf
+Plugin 'joukevandermaas/vim-ember-hbs'
+Plugin 'mmalecki/vim-node.js'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
-"Plugin 'othree/javascript-libraries-syntax'
-Plugin 'joukevandermaas/vim-ember-hbs'
-Plugin 'AndrewRadev/ember_tools.vim'
-
-Plugin 'mmalecki/vim-node.js'
 Plugin 'ramitos/jsctags'
-Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'ludovicchabant/vim-gutentags'        " Automatic tags handler
+Plugin 'ap/vim-css-color'                    " Shows CSS color inline
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'groenewege/vim-less'
 
+" Go
+Plugin 'fatih/vim-go'
+
+" Languages Other
 Plugin 'tpope/vim-markdown'
 Plugin 'timcharper/textile.vim'
-Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'ajf/puppet-vim'
-Plugin 'rosstimson/scala-vim-support'
-
-Plugin 'tpope/vim-git'
 Plugin 'chrisbra/csv.vim'
-Plugin 'vim-scripts/Arduino-syntax-file'
-Plugin 'groenewege/vim-less'
-Plugin 'wlangstroth/vim-haskell'
 Plugin 'slim-template/vim-slim'
-Plugin 'jimenezrick/vimerl'
-Plugin 'guns/vim-clojure-static'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'tpope/vim-liquid'
 
-" Tools
-Plugin 'tpope/vim-unimpaired'
-"Plugin 'scrooloose/nerdcommenter'
-Plugin 'tmhedberg/matchit'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'ajh17/VimCompletesMe'
-Plugin 'itspriddle/ZoomWin'
-Plugin 'mileszs/ack.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'sjl/gundo.vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'tomtom/tlib_vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-"Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdtree'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'mattn/gist-vim'
-Plugin 'vim-scripts/vimwiki'
-Plugin 'ap/vim-css-color'
-"Plugin 'Lokaltog/vim-easymotion'
-"Plugin 'chrisbra/NrrwRgn'
-" Plugin 'jeetsukumaran/vim-buffergator'
-" Plugin 'rgarver/Kwbd.vim'
-"Plugin 'kien/ctrlp.vim'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-"Plugin 'skalnik/vim-vroom'
-Plugin 'tpope/vim-eunuch'
-Plugin 'tpope/vim-repeat'
-Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips'
-Plugin 'tpope/vim-projectionist'
-"Plugin 'terryma/vim-multiple-cursors'
-Plugin 'thinca/vim-visualstar'
+" Tools Other
+Plugin 'vim-scripts/vimwiki'              " Wiki engine, mounted on <Leader>ww
+Plugin 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall,  :SudoWrite
+Plugin 'tpope/vim-repeat'                 " Repeat with .
+Plugin 'tpope/vim-projectionist'          " Procejt options support in json
+Plugin 'michaeljsmith/vim-indent-object'  " Indent using << and >>
+Plugin 'terryma/vim-multiple-cursors'     " Mapped on Ctrl+n
+"Plugin 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>
+"Plugin 'sjl/gundo.vim'
+"Plugin 'Rykka/colorv.vim'                " Colorpicker
 
 call vundle#end()
 filetype on

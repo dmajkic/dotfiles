@@ -1,8 +1,8 @@
 require "rubygems"
 require "awesome_print"
 
-#Pry.config.commands.import Pry::ExtendedCommands::Experimental
-#Pry.config.pager = false
+Pry.config.commands.import Pry::ExtendedCommands::Experimental
+Pry.config.pager = true
 Pry.config.color = true
 #Pry.config.history.should_save = false
 

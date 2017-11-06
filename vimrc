@@ -17,18 +17,16 @@ set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
 set nowritebackup
 set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
+set autowrite     " Automatically :write before running commands
 set history=50
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
+set ignorecase    " ... ingnoring case
+set smartcase     " ... except when Uppercase typed
+set hlsearch      " ... and highlight found words
 set laststatus=2  " Always display the status line
-set autowrite     " Automatically :write before running commands
 set nowrap        " No wraping
-set incsearch
-set ignorecase
-set smartcase
-set hlsearch
-set smartcase     " Incsearch smarcase, if lower=ci
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -36,6 +34,7 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   syntax on
 endif
 
+" Vundle plugins
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
@@ -49,11 +48,11 @@ set shiftround
 set expandtab
 set textwidth=80
 "set colorcolumn=+1    " Make it obvious where 80 characters is
-set number
-set numberwidth=5
-set splitbelow        " New split to right and bottom
-set splitright
-set diffopt+=vertical " Always use vertical diffs
+set number             " Show line numbers
+set numberwidth=5      " ...width 5 chars
+set splitbelow         " New split to bottom
+set splitright         " ... and to right
+set diffopt+=vertical  " Always use vertical diffs
 set spelllang=en_us
 set spellsuggest=best,5
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -106,13 +105,10 @@ augroup END
 " Color scheme
 colorscheme railscasts
 highlight LineNr guibg=#111111 ctermfg=DarkGrey
-highlight CursorLineNr guibg=Grey ctermfg=Grey
+highlight CursorLineNr guibg=#111111 guifg=Grey ctermfg=DarkGrey
 set cursorline
 
 if has("gui_running")
-
-  "highlight Comment guifg=#667b8f
-  highlight LineNr guibg=#111111
 
   if has("gui_gtk2")
     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
@@ -124,7 +120,6 @@ if has("gui_running")
   endif
 
   set lines=40 columns=117
-  set cursorline
   set guioptions-=T  " No toolbar
   set guioptions+=c  " Use console dialogs
 else
@@ -167,10 +162,15 @@ endif
 
 " fixes common typos; Mapira č, ; i Č u : za komande
 nnoremap - /
-nnoremap š [
-nnoremap đ ]
-nnoremap Š {
-nnoremap Đ }
+nmap š [
+nmap đ ]
+omap š [
+omap đ ]
+xmap š [
+xmap š ]
+nmap Š {
+nmap Đ }
+nmap <F21> -
 nnoremap ; :
 nnoremap č :
 nnoremap Č :
@@ -242,16 +242,16 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " Build commnad to feed muscle memory
-nmap <F5> :make<CR>:copen<CR>
-nmap <C-B> :make<CR>:copen<CR>
+nmap <F5> :Make<CR>:copen<CR>
+nmap <C-B> :Make<CR>:copen<CR>
 
 " Cool things from Janus
 cmap w!! %!sudo tee > /dev/null % " use :w!! to write using sudo
 nmap <leader>fef ggVG=            " format the entire file
-nmap <silent><leader>. :bnext<CR>       " Next buffer
-nmap <silent><leader>m :bprev<CR>       " Previous buffer
-nmap <leader>U mQviwU`Q           " upper/lower word
-nmap <leader>L mQviwu`Q
+nmap <silent><leader>. :bnext<CR> " Next buffer
+nmap <silent><leader>m :bprev<CR> " Previous buffer
+nmap <leader>U mQviwU`Q           " UPPER word
+nmap <leader>L mQviwu`Q           " lower word
 
 nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`' " Swap two words
 nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>              " Underline the current line with '='
