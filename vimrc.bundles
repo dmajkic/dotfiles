@@ -28,6 +28,7 @@ Plugin 'honza/vim-snippets'             " Snippets library
 Plugin 'ntpeters/vim-better-whitespace' " Whitespace, strip with <leader><Space>
 Plugin 'thinca/vim-visualstar'          " Search word, mounted on *
 Plugin 'terryma/vim-expand-region'      " v-v-v expand region
+Plugin 'editorconfig/editorconfig-vim'  " Support .editorconfig files
 
 if v:version < 800
   Plugin 'scrooloose/syntastic'         " Linter for vim 7 (alt. ALE)
