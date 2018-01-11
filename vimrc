@@ -122,6 +122,8 @@ if has("gui_running")
   set lines=40 columns=117
   set guioptions-=T  " No toolbar
   set guioptions+=c  " Use console dialogs
+  set guioptions-=L  " Disable scroll bar
+  set guioptions-=r  " Disable scroll bar
 else
   if $TMUX != ""
     set t_ut=
@@ -277,6 +279,7 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
+let g:ale_linters = { 'javascript': ['eslint'] }
 
 " Lightline
 let g:lightline = {

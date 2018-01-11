@@ -66,6 +66,7 @@ Plugin 'depuracao/vim-rdoc'
 Plugin 'pangloss/vim-javascript'
 "Plugin 'othree/javascript-libraries-syntax'  " JS Libs syntax (jquery, react, vudle...)
 Plugin 'AndrewRadev/ember_tools.vim'          " Ember support, gf
+Plugin 'alexlafroscia/vim-ember-cli'
 Plugin 'joukevandermaas/vim-ember-hbs'
 Plugin 'mmalecki/vim-node.js'
 Plugin 'mxw/vim-jsx'
@@ -88,12 +89,12 @@ Plugin 'slim-template/vim-slim'
 
 " Tools Other
 Plugin 'vim-scripts/vimwiki'              " Wiki engine, mounted on <Leader>ww
-Plugin 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall,  :SudoWrite
+Plugin 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall, :SudoWrite
 Plugin 'tpope/vim-repeat'                 " Repeat with .
 Plugin 'tpope/vim-projectionist'          " Procejt options support in json
 Plugin 'michaeljsmith/vim-indent-object'  " Indent using << and >>
 Plugin 'terryma/vim-multiple-cursors'     " Mapped on Ctrl+n
-"Plugin 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>
+Plugin 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>
 "Plugin 'sjl/gundo.vim'
 "Plugin 'Rykka/colorv.vim'                " Colorpicker
 
