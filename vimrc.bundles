@@ -72,7 +72,7 @@ Plugin 'mmalecki/vim-node.js'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 Plugin 'ramitos/jsctags'
-Plugin 'ludovicchabant/vim-gutentags'        " Automatic tags handler
+"Plugin 'ludovicchabant/vim-gutentags'        " Automatic tags handler
 Plugin 'ap/vim-css-color'                    " Shows CSS color inline
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'groenewege/vim-less'
