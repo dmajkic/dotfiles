@@ -12,16 +12,16 @@ Plugin 'gmarik/Vundle.vim'
 " Core plugins
 Plugin 'majutsushi/tagbar'              " Tags, mounted on F10
 Plugin 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'junegunn/fzf'                   " Fuzzy find using fzf, Ctrl+P,F,X
 Plugin 'junegunn/fzf.vim'               " fzf interface (alt. CtrlP)
 Plugin 'mileszs/ack.vim'                " Find in files, Ag
-Plugin 'Valloric/YouCompleteMe'         " Completer
-"Plugin 'ajh17/VimCompletesMe'          " Tab completition
 Plugin 'tpope/vim-fugitive'             " Git integration
 Plugin 'airblade/vim-gitgutter'         " Git changes in gutter
 Plugin 'tpope/vim-git'                  " Git commands
 Plugin 'tpope/vim-dispatch'             " :Make and :Dispatch for tmux dispatching
 Plugin 'itchyny/lightline.vim'          " Status bar (alt. powerline, airline)
+Plugin 'maximbaz/lightline-ale'         " ALE u LightLine
 Plugin 'vim-scripts/tComment'           " Commenter, mounted on ctrl+_,ctrl+_
 Plugin 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
 Plugin 'honza/vim-snippets'             " Snippets library
@@ -33,8 +33,19 @@ Plugin 'jiangmiao/auto-pairs'           " Automatic insert closing bracket
 
 if v:version < 800
   Plugin 'scrooloose/syntastic'         " Linter for vim 7 (alt. ALE)
+  "Plugin 'Valloric/YouCompleteMe'       " Completer
+  Plugin 'ajh17/VimCompletesMe'          " Tab completition
 else
   Plugin 'w0rp/ale'                     " Async Linter (alt. syntastic)
+  if has('nvim')
+    Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plugin 'autozimu/LanguageClient-neovim'
+  else
+    Plugin 'Shougo/deoplete.nvim'
+    Plugin 'roxma/nvim-yarp'
+    Plugin 'roxma/vim-hug-neovim-rpc'
+  endif
+  let g:deoplete#enable_at_startup = 1
 endif
 
 " Colors
@@ -73,9 +84,8 @@ Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 Plugin 'ramitos/jsctags'
 "Plugin 'ludovicchabant/vim-gutentags'        " Automatic tags handler
-Plugin 'ap/vim-css-color'                    " Shows CSS color inline
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'groenewege/vim-less'
+Plugin 'gorodinskiy/vim-coloresque.git'       " Shows CSS color inline
+"Plugin 'groenewege/vim-less'
 
 " Go
 Plugin 'fatih/vim-go'
@@ -83,7 +93,7 @@ Plugin 'fatih/vim-go'
 " Languages Other
 Plugin 'tpope/vim-markdown'
 Plugin 'timcharper/textile.vim'
-Plugin 'ajf/puppet-vim'
+"Plugin 'ajf/puppet-vim'
 Plugin 'chrisbra/csv.vim'
 Plugin 'slim-template/vim-slim'
 
@@ -91,7 +101,7 @@ Plugin 'slim-template/vim-slim'
 Plugin 'vim-scripts/vimwiki'              " Wiki engine, mounted on <Leader>ww
 Plugin 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall, :SudoWrite
 Plugin 'tpope/vim-repeat'                 " Repeat with .
-Plugin 'tpope/vim-projectionist'          " Procejt options support in json
+"Plugin 'tpope/vim-projectionist'          " Procejt options support in json
 Plugin 'michaeljsmith/vim-indent-object'  " Indent using << and >>
 Plugin 'terryma/vim-multiple-cursors'     " Mapped on Ctrl+n
 Plugin 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>

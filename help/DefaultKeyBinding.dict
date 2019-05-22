@@ -1,0 +1,28 @@
+{
+/* ~/Library/KeyBindings/DefaultKeyBinding.dict  */
+/* Remap Home / End to be correct :-) */
+"\UF729"  = "moveToBeginningOfLine:";                   /* Home         */
+"\UF72B"  = "moveToEndOfLine:";                         /* End          */
+"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+"$\UF72B" = "moveToEndOfLineAndModifySelection:";       /* Shift + End  */
+"^\UF729" = "moveToBeginningOfDocument:";               /* Ctrl + Home Button */
+"^\UF72B" = "moveToEndOfDocument:";                     /* Ctrl + End Button */
+"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home Button */
+"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:";  /* Shift + Ctrl + End Button*/
+
+"@\UF702"  = "moveWordBackward:";                       /* Cmd  + LeftArrow */
+"@\UF703"  = "moveWordForward:";                        /* Cmd  + RightArrow */
+"@\UF728"  = "deleteWordForward:";                      /* Cmd  + Delete */
+
+"^\UF702"  = "moveWordBackward:";                       /* Ctrl + LeftArrow */
+"^\UF703"  = "moveWordForward:";                        /* Ctrl + RightArrow */
+"^\UF728"  = "deleteWordForward:";                      /* Ctrl + Delete */
+
+"@$\UF702" = "moveWordBackwardAndModifySelection:";     /* Shift + Cmd  + Leftarrow */
+"@$\UF703" = "moveWordForwardAndModifySelection:";      /* Shift + Cmd  + Rightarrow */
+
+"$^\UF702" = "moveWordBackwardAndModifySelection:";     /* Shift + Crtl  + Leftarrow */
+"$^\UF703" = "moveWordForwardAndModifySelection:";      /* Shift + Crtl  + Rightarrow */
+}
+
+

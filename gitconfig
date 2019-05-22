@@ -1,7 +1,7 @@
 [merge]
 	tool = kdiff3
 [user]
-	name = Dusan D. Majkic
+	name = Dušan D. Majkić
 	email = dmajkic@lovor.net
 [core]
 	editor = vim
@@ -30,6 +30,6 @@
 
   dlc = diff --cached HEAD^
 	up = pull --ff-only --all -p
-
+  difflast = diff @~..@
 [push]
 	default = simple

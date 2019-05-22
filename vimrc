@@ -1,3 +1,4 @@
+silent! py3 pass
 " Sets the language of the menu on gvim (dmajkic)
 set langmenu=en_US.UTF-8
 let $LANG='en'
@@ -83,9 +84,6 @@ augroup vimrcEx
     \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" | endif
 
-  " Enable spellchecking for Markdown
-  autocmd FileType markdown setlocal spell
-
   " Automatically wrap at 80 characters for Markdown
   autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 
@@ -96,9 +94,10 @@ augroup vimrcEx
   autocmd FileType make set noexpandtab
 
   " PRG podesavanja
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.ch setlocal tabstop=3
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.ch setlocal shiftwidth=3
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.ch setlocal noexpandtab
+  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal tabstop=3
+  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal shiftwidth=3
+  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal noexpandtab
+  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal textwidth=0 wrapmargin=0
 augroup END
 
 
@@ -106,14 +105,14 @@ augroup END
 colorscheme railscasts
 highlight LineNr guibg=#111111 ctermfg=DarkGrey
 highlight CursorLineNr guibg=#111111 guifg=Grey ctermfg=DarkGrey
-set cursorline
+set nocursorline
 
 if has("gui_running")
 
   if has("gui_gtk2")
     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
   elseif has("gui_macvim")
-    set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+    set guifont=Monaco:h16
   elseif has("gui_win32")
    " set guifont=Lucida_Sans_Typewriter:h14
     set guifont=Sauce_Code_Powerline:h13
@@ -261,12 +260,21 @@ nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>         " find merge conf
 cmap <C-P> <C-R>=expand("%:p:h") . "/"                         " current dir into a command-line path
 
 if executable('ag')
-  "let g:ackprg = 'ag --vimgrep'
   nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>
+  "let g:ackprg = 'ag --vimgrep'
   let g:ackprg="ag --nogroup --nocolor --column"
   set grepformat=%f:%l%c%m
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor\ --column
+endif
+
+if executable('rg')
+  nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>
+  nnoremap <Leader>g :silent lgrep<Space>
+  let g:ackprg="rg --vimgrep --no-heading --smart-case"
+  set grepformat=%f:%l%c%m
+  " Use ag over grep
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
 endif
 
 " Javascripting
@@ -275,11 +283,13 @@ let g:jsx_ext_required = 0
 
 " ALE
 let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-let g:ale_linters = { 'javascript': ['eslint'] }
+let g:ale_linters = { 'javascript': ['prettier', 'eslint'] }
 
 " Lightline
 let g:lightline = {
