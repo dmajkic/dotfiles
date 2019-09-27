@@ -23,13 +23,10 @@ Plugin 'tpope/vim-dispatch'             " :Make and :Dispatch for tmux dispatchi
 Plugin 'itchyny/lightline.vim'          " Status bar (alt. powerline, airline)
 Plugin 'maximbaz/lightline-ale'         " ALE u LightLine
 Plugin 'vim-scripts/tComment'           " Commenter, mounted on ctrl+_,ctrl+_
-Plugin 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
-Plugin 'honza/vim-snippets'             " Snippets library
 Plugin 'ntpeters/vim-better-whitespace' " Whitespace, strip with <leader><Space>
 Plugin 'thinca/vim-visualstar'          " Search word, mounted on *
 Plugin 'terryma/vim-expand-region'      " v-v-v expand region
 Plugin 'editorconfig/editorconfig-vim'  " Support .editorconfig files
-Plugin 'jiangmiao/auto-pairs'           " Automatic insert closing bracket
 
 if v:version < 800
   Plugin 'scrooloose/syntastic'         " Linter for vim 7 (alt. ALE)
@@ -40,12 +37,25 @@ else
   if has('nvim')
     Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plugin 'autozimu/LanguageClient-neovim'
+    Plugin 'Shougo/neosnippet.vim'
+    Plugin 'Shougo/neosnippet-snippets'
   else
     Plugin 'Shougo/deoplete.nvim'
     Plugin 'roxma/nvim-yarp'
     Plugin 'roxma/vim-hug-neovim-rpc'
+    Plugin 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
+    Plugin 'honza/vim-snippets'             " Snippets library
   endif
+
   let g:deoplete#enable_at_startup = 1
+  inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
+  function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
 endif
 
 " Colors
@@ -66,6 +76,7 @@ Plugin 'skwp/vim-rspec'
 Plugin 'ngmy/vim-rubocop'
 Plugin 'tpope/vim-surround'           " Surround with cs<quote><quote>
 Plugin 'tpope/vim-endwise'            " Autoinsert end, endif, ...
+Plugin 'jiangmiao/auto-pairs'         " Autoinsert quotes  
 Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-liquid'
