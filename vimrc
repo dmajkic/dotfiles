@@ -28,6 +28,7 @@ set smartcase     " ... except when Uppercase typed
 set hlsearch      " ... and highlight found words
 set laststatus=2  " Always display the status line
 set nowrap        " No wraping
+set clipboard=unnamed " Use system clipboard
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
