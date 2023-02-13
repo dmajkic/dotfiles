@@ -2,50 +2,46 @@ if &compatible
   set nocompatible
 end
 
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+if has("win64") || has("win32")
+  let g:python3_host_prog="C:/Users/dmajk/AppData/Local/Programs/Python/Python311/python.exe"
+endif
 
-" Let Vundle manage Vundle
-Plugin 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " Core plugins
-Plugin 'majutsushi/tagbar'              " Tags, mounted on F10
-Plugin 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'junegunn/fzf'                   " Fuzzy find using fzf, Ctrl+P,F,X
-Plugin 'junegunn/fzf.vim'               " fzf interface (alt. CtrlP)
-Plugin 'mileszs/ack.vim'                " Find in files, Ag
-Plugin 'tpope/vim-fugitive'             " Git integration
-Plugin 'airblade/vim-gitgutter'         " Git changes in gutter
-Plugin 'tpope/vim-git'                  " Git commands
-Plugin 'tpope/vim-dispatch'             " :Make and :Dispatch for tmux dispatching
-Plugin 'itchyny/lightline.vim'          " Status bar (alt. powerline, airline)
-Plugin 'maximbaz/lightline-ale'         " ALE u LightLine
-Plugin 'vim-scripts/tComment'           " Commenter, mounted on ctrl+_,ctrl+_
-Plugin 'ntpeters/vim-better-whitespace' " Whitespace, strip with <leader><Space>
-Plugin 'thinca/vim-visualstar'          " Search word, mounted on *
-Plugin 'terryma/vim-expand-region'      " v-v-v expand region
-Plugin 'editorconfig/editorconfig-vim'  " Support .editorconfig files
+Plug 'majutsushi/tagbar'              " Tags, mounted on F10
+Plug 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " Fuzzy find using fzf, Ctrl+P,F,X
+Plug 'junegunn/fzf.vim'               " fzf interface (alt. CtrlP)
+Plug 'mileszs/ack.vim'                " Find in files, Ag
+Plug 'tpope/vim-fugitive'             " Git integration
+Plug 'airblade/vim-gitgutter'         " Git changes in gutter
+Plug 'tpope/vim-git'                  " Git commands
+Plug 'tpope/vim-dispatch'             " :Make and :Dispatch for tmux dispatching
+Plug 'itchyny/lightline.vim'          " Status bar (alt. powerline, airline)
+Plug 'maximbaz/lightline-ale'         " ALE u LightLine
+Plug 'vim-scripts/tComment'           " Commenter, mounted on ctrl+_,ctrl+_
+Plug 'ntpeters/vim-better-whitespace' " Whitespace, strip with <leader><Space>
+Plug 'thinca/vim-visualstar'          " Search word, mounted on *
+Plug 'terryma/vim-expand-region'      " v-v-v expand region
+Plug 'editorconfig/editorconfig-vim'  " Support .editorconfig files
 
-if v:version < 800
-  Plugin 'scrooloose/syntastic'         " Linter for vim 7 (alt. ALE)
-  "Plugin 'Valloric/YouCompleteMe'       " Completer
-  Plugin 'ajh17/VimCompletesMe'          " Tab completition
+Plug 'w0rp/ale'                     " Async Linter (alt. syntastic)
+
+if !has('nvim')
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
+  Plug 'honza/vim-snippets'             " Snippets library
 else
-  Plugin 'w0rp/ale'                     " Async Linter (alt. syntastic)
-  if has('nvim')
-    Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plugin 'autozimu/LanguageClient-neovim'
-    Plugin 'Shougo/neosnippet.vim'
-    Plugin 'Shougo/neosnippet-snippets'
-  else
-    Plugin 'Shougo/deoplete.nvim'
-    Plugin 'roxma/nvim-yarp'
-    Plugin 'roxma/vim-hug-neovim-rpc'
-    Plugin 'SirVer/ultisnips'               " Snippet engine, (alt. vim-snipmate) (req. Python in vim)
-    Plugin 'honza/vim-snippets'             " Snippets library
-  endif
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'autozimu/LanguageClient-neovim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
+
 
   let g:deoplete#enable_at_startup = 1
   inoremap <silent><expr> <TAB>
@@ -59,65 +55,71 @@ else
 endif
 
 " Colors
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'tpope/vim-vividchalk'
-Plugin 'vim-scripts/molokai'
-Plugin 'jnurmine/Zenburn'
-Plugin 'telamon/vim-color-github'
-Plugin 'vim-scripts/Colour-Sampler-Pack'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'TechnoGate/janus-colors'
-Plugin 'chriskempson/base16-vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'tpope/vim-vividchalk'
+Plug 'vim-scripts/molokai'
+Plug 'jnurmine/Zenburn'
+Plug 'telamon/vim-color-github'
+Plug 'vim-scripts/Colour-Sampler-Pack'
+Plug 'altercation/vim-colors-solarized'
+Plug 'TechnoGate/janus-colors'
+Plug 'chriskempson/base16-vim'
 
 " Ruby
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'skwp/vim-rspec'
-Plugin 'ngmy/vim-rubocop'
-Plugin 'tpope/vim-surround'           " Surround with cs<quote><quote>
-Plugin 'tpope/vim-endwise'            " Autoinsert end, endif, ...
-Plugin 'jiangmiao/auto-pairs'         " Autoinsert quotes  
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-haml'
-Plugin 'tpope/vim-liquid'
-Plugin 'sunaku/vim-ruby-minitest'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'depuracao/vim-rdoc'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'skwp/vim-rspec'
+Plug 'ngmy/vim-rubocop'
+Plug 'tpope/vim-surround'           " Surround with cs<quote><quote>
+Plug 'tpope/vim-endwise'            " Autoinsert end, endif, ...
+Plug 'jiangmiao/auto-pairs'         " Autoinsert quotes  
+Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-liquid'
+Plug 'sunaku/vim-ruby-minitest'
+Plug 'kchmck/vim-coffee-script'
+Plug 'depuracao/vim-rdoc'
 
 " Javascript, Ember, React
-Plugin 'pangloss/vim-javascript'
-"Plugin 'othree/javascript-libraries-syntax'  " JS Libs syntax (jquery, react, vudle...)
-Plugin 'AndrewRadev/ember_tools.vim'          " Ember support, gf
-Plugin 'alexlafroscia/vim-ember-cli'
-Plugin 'joukevandermaas/vim-ember-hbs'
-Plugin 'mmalecki/vim-node.js'
-Plugin 'mxw/vim-jsx'
-Plugin 'elzr/vim-json'
-Plugin 'ramitos/jsctags'
-"Plugin 'ludovicchabant/vim-gutentags'        " Automatic tags handler
-Plugin 'gorodinskiy/vim-coloresque.git'       " Shows CSS color inline
-"Plugin 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+"Plug 'othree/javascript-libraries-syntax'  " JS Libs syntax (jquery, react, vudle...)
+Plug 'AndrewRadev/ember_tools.vim'          " Ember support, gf
+Plug 'alexlafroscia/vim-ember-cli'
+Plug 'joukevandermaas/vim-ember-hbs'
+Plug 'mmalecki/vim-node.js'
+Plug 'mxw/vim-jsx'
+Plug 'elzr/vim-json'
+Plug 'ramitos/jsctags'
+"Plug 'ludovicchabant/vim-gutentags'      " Automatic tags handler
+"Plug 'gorodinskiy/vim-coloresque.git'    " Shows CSS color inline
+Plug 'chrisbra/Colorizer'                 " Shows CSS color inline
+"Plug 'groenewege/vim-less'
 
 " Go
-Plugin 'fatih/vim-go'
+Plug 'fatih/vim-go'
 
 " Languages Other
-Plugin 'tpope/vim-markdown'
-Plugin 'timcharper/textile.vim'
-"Plugin 'ajf/puppet-vim'
-Plugin 'chrisbra/csv.vim'
-Plugin 'slim-template/vim-slim'
+Plug 'tpope/vim-markdown'
+Plug 'timcharper/textile.vim'
+"Plug 'ajf/puppet-vim'
+Plug 'chrisbra/csv.vim'
+Plug 'slim-template/vim-slim'
 
 " Tools Other
-Plugin 'vim-scripts/vimwiki'              " Wiki engine, mounted on <Leader>ww
-Plugin 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall, :SudoWrite
-Plugin 'tpope/vim-repeat'                 " Repeat with .
-"Plugin 'tpope/vim-projectionist'          " Procejt options support in json
-Plugin 'michaeljsmith/vim-indent-object'  " Indent using << and >>
-Plugin 'terryma/vim-multiple-cursors'     " Mapped on Ctrl+n
-Plugin 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>
-"Plugin 'sjl/gundo.vim'
-"Plugin 'Rykka/colorv.vim'                " Colorpicker
+Plug 'vim-scripts/vimwiki'              " Wiki engine, mounted on <Leader>ww
+Plug 'tpope/vim-eunuch'                 " File commands :Delete, :Chmod, :Wall, :SudoWrite
+Plug 'tpope/vim-repeat'                 " Repeat with .
+"Plug 'tpope/vim-projectionist'          " Procejt options support in json
+Plug 'michaeljsmith/vim-indent-object'  " Indent using << and >>
+Plug 'terryma/vim-multiple-cursors'     " Mapped on Ctrl+n
+Plug 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leader>
+"Plug 'sjl/gundo.vim'
+"Plug 'Rykka/colorv.vim'                " Colorpicker
 
-call vundle#end()
-filetype on
+call plug#end()
+
+lua << EOF
+  require 'lspconfig'
+  require'lspconfig'.solargraph.setup{}
+EOF
+
