@@ -1,6 +1,6 @@
 if &compatible
   set nocompatible
-end
+endif
 
 if has("win64") || has("win32")
   let g:python3_host_prog="C:/Users/dmajk/AppData/Local/Programs/Python/Python311/python.exe"
@@ -37,7 +37,7 @@ if !has('nvim')
   Plug 'honza/vim-snippets'             " Snippets library
 else
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'autozimu/LanguageClient-neovim'
+  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
   Plug 'neovim/nvim-lspconfig'
   Plug 'Shougo/neosnippet.vim'
   Plug 'Shougo/neosnippet-snippets'
@@ -52,6 +52,7 @@ else
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
   endfunction"}}}
+
 endif
 
 " Colors
@@ -72,7 +73,7 @@ Plug 'skwp/vim-rspec'
 Plug 'ngmy/vim-rubocop'
 Plug 'tpope/vim-surround'           " Surround with cs<quote><quote>
 Plug 'tpope/vim-endwise'            " Autoinsert end, endif, ...
-Plug 'jiangmiao/auto-pairs'         " Autoinsert quotes  
+Plug 'jiangmiao/auto-pairs'         " Autoinsert quotes
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-haml'
 Plug 'tpope/vim-liquid'
@@ -118,8 +119,7 @@ Plug 'Lokaltog/vim-easymotion'         " Move in file, mounted on <leader><leade
 
 call plug#end()
 
-lua << EOF
-  require 'lspconfig'
-  require'lspconfig'.solargraph.setup{}
-EOF
-
+if has('nvim')
+  lua require 'lspconfig'
+  lua require'lspconfig'.solargraph.setup{}
+endif
