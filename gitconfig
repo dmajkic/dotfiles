@@ -2,10 +2,9 @@
 	tool = kdiff3
 [user]
 	name = Dušan D. Majkić
-	email = dmajkic@lovor.net
+	email = 84048+dmajkic@users.noreply.github.com
 [core]
 	editor = vim
-	autocrlf = false
 [color]
 	diff = auto
 	status = auto
@@ -33,3 +32,5 @@
   difflast = diff @~..@
 [push]
 	default = simple
+[init]
+	defaultBranch = main

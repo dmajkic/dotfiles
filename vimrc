@@ -28,7 +28,7 @@ set smartcase     " ... except when Uppercase typed
 set hlsearch      " ... and highlight found words
 set laststatus=2  " Always display the status line
 set nowrap        " No wraping
-set clipboard=unnamed " Use system clipboard
+" set clipboard=unnamedplus " Use system clipboard
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -94,11 +94,6 @@ augroup vimrcEx
   " Makefile
   autocmd FileType make set noexpandtab
 
-  " PRG podesavanja
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal tabstop=3
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal shiftwidth=3
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal noexpandtab
-  autocmd BufRead,BufNewFile,BufEnter *.prg,*.PRG,*.CH,*.ch setlocal textwidth=0 wrapmargin=0
 augroup END
 
 
@@ -157,11 +152,6 @@ let g:html_indent_tags = 'li\|p'
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 
-" Fancy symbols in vim powerline on gui
-if has("gui_running") || (&t_Co > 100)
-  let g:airline_powerline_fonts = 1
-endif
-
 " fixes common typos; Mapira č, ; i Č u : za komande
 nnoremap - /
 nmap š [
@@ -191,9 +181,10 @@ vmap <F10> <esc>:TagbarToggle<cr>
 imap <F10> <esc>:TagbarToggle<cr>
 
 " NERDTree cd to root
-let NERDTreeChDirMode=2
-let NERDTreeIgnore = ['\.pyc$', '\.ntx$', '\.dbf$', '\.dbt$', '\.DBF$', '\.NTX$', '\.DBT$', '\.NTX$', '\.ntx$']
-nmap <leader>n :NERDTreeToggle<CR>
+" let NERDTreeChDirMode=2
+" let NERDTreeIgnore = ['\.pyc$', '\.ntx$', '\.dbf$', '\.dbt$', '\.DBF$', '\.NTX$', '\.DBT$', '\.NTX$', '\.ntx$']
+" nmap <leader>n :NERDTreeToggle<CR>
+nmap <leader>n :Lex<CR>
 
 " Custom ignores for CtrlP
 let g:ctrlp_custom_ignore = '\v.DS_Store|.sass-cache|.bundle|dcu|log|tmp|.git|private|.hg|.svn|node_modules|vendor|bower_components$'

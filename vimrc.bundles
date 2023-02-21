@@ -4,14 +4,17 @@ endif
 
 if has("win64") || has("win32")
   let g:python3_host_prog="C:/Users/dmajk/AppData/Local/Programs/Python/Python311/python.exe"
+else
+  let g:python3_host_prog="/usr/bin/python3"
 endif
+let g:loaded_perl_provider = 0
 
 call plug#begin('~/.vim/plugged')
 
 " Core plugins
 Plug 'majutsushi/tagbar'              " Tags, mounted on F10
-Plug 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'            " Files, mopunted on <leader>N
+"Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " Fuzzy find using fzf, Ctrl+P,F,X
 Plug 'junegunn/fzf.vim'               " fzf interface (alt. CtrlP)
 Plug 'mileszs/ack.vim'                " Find in files, Ag
