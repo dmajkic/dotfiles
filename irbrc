@@ -1,37 +1,34 @@
-require "rubygems"
-require "awesome_print"
 require 'irb/completion'      # [tab][tab]
-require 'map_by_method'       # requires map_by_method gem (http://snipr.com/30q36)
-require 'what_methods'        # requires the what_methods gem
-require 'hirb'
+require "awesome_print"
+AwesomePrint.irb!
 
-ENV['IRB_HISTORY_FILE'] = "%USERPROFILE%\\\\.irb_history"
-Hirb.enable
-
-# Return a list of methods defined locally for a particular object.  Useful
-# for seeing what it does whilst losing all the guff that's implemented
-# by its parents (eg Object).
-# See comments here: http://drnicwilliams.com/2006/10/12/my-irbrc-for-consoleirb/
-class Object
-  def local_methods(obj = self)
-    obj.methods(false).sort
+# configure autocomplete dialog colors
+if defined? Reline::Face
+  Reline::Face.config(:completion_dialog) do |conf|
+    conf.define(:default, foreground: "#cad3f5", background: "#363a4f")
+    conf.define(:enhanced, foreground: "#cad3f5", background: "#5b6078")
+    conf.define(:scrollbar, foreground: "#c6a0f6", background: "#181926")
   end
+  IRB.conf[:COMPLETOR] = :type
+else
+  IRB.conf[:USE_AUTOCOMPLETE] = false
 end
 
-# awesome_print ap
-unless IRB.version.include?('DietRB')
-  IRB::Irb.class_eval do
-    def output_value
-      ap @context.last_value
-    end
-  end
-else # MacRuby
-  IRB.formatter = Class.new(IRB::Formatter) do
-    def inspect_object(object)
-      object.ai
-    end
-  end.new
+IRB.conf[:EVAL_HISTORY] = 1_000
+IRB.conf[:HISTORY_FILE] = "#{Dir.home}/.irb_history.log"
+
+rails_env = "🤗"
+if ENV['RAILS_ENV'] == 'production'
+  rails_env = "production 🥶"
+elsif ENV['RAILS_ENV'] == 'staging'
+  rails_env = "staging 🧘"
 end
 
-# marker
-puts ".irbrc successfully loaded"
+IRB.conf[:PROMPT][:RAILS_APP] = {
+  :PROMPT_I=>"#{rails_env} %N(%m):%03n> ",
+  :PROMPT_S=>"#{rails_env} %N(%m):%03n%l ",
+  :PROMPT_C=>"#{rails_env} %N(%m):%03n* ",
+  :RETURN=>"#{rails_env} => %s\n"
+}
+IRB.conf[:PROMPT_MODE] = :RAILS_APP
+
