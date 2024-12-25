@@ -1,4 +1,4 @@
-silent! py3 pass
+" silent! py3 pass
 " Sets the language of the menu on gvim (dmajkic)
 set langmenu=en_US.UTF-8
 let $LANG='en'
@@ -9,7 +9,7 @@ scriptencoding utf-8
 set nocompatible
 
 " Leader ,
-let mapleader = ","
+let mapleader = "<Space>"
 
 " Core
 autocmd GUIEnter * set vb t_vb= " visualbell off (GUI)
@@ -28,17 +28,32 @@ set smartcase     " ... except when Uppercase typed
 set hlsearch      " ... and highlight found words
 set laststatus=2  " Always display the status line
 set nowrap        " No wraping
+set paste         " Do not reformat on paste
+set nocursorline  " No cursor line, show in insert mode
+autocmd InsertEnter,InsertLeave * set cul!
 " set clipboard=unnamedplus " Use system clipboard
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-endif
-
-" Vundle plugins
+" Plug plugins
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
+endif
+
+" True color or 256 color term
+if (&t_Co > 2 || has("gui_running"))
+  syntax on
+
+  set termguicolors
+  let g:ayu_extended_palette = 1
+  let g:ayucolor="dark" " mirage light dark
+  let g:ayu_sign_contrast=1
+  let g:ayu_italic_comment=1
+
+  colorscheme ayu
+
+  " Cursor change
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[2 q"
+  let &t_SR = "\e[4 q"
 endif
 
 filetype plugin indent on
@@ -61,8 +76,8 @@ set spellfile=$HOME/.vim-spell-en.utf-8.add
 set nolist            " Hide whitespace
 set listchars=tab:»·,trail:·,eol:¬,extends:>,precedes:<
 
-nnoremap <Leader>l :set list!<CR>             " Toggle invisible chars
-nnoremap <Leader><Space> :StripWhitespace<CR> " Strip trailing whitespace
+nnoremap <Leader>l :set list!<CR>
+nnoremap <Leader><Space> :StripWhitespace<CR>
 
 "set showbreak=↪
 set fillchars=vert:│,fold:\⋅
@@ -78,33 +93,17 @@ endif
 augroup vimrcEx
   autocmd!
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" | endif
+" When editing a file, always jump to the last known cursor position.
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent! loadview
 
-  " Automatically wrap at 80 characters for Markdown
-  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-  " Allow stylesheets to autocomplete hyphenated words
-  autocmd FileType css,scss,sass setlocal iskeyword+=-
-
-  " Makefile
-  autocmd FileType make set noexpandtab
+" Makefile tabs; Ruby spaces
+autocmd FileType make set noexpandtab
+autocmd FileType ruby set expandtab
 
 augroup END
 
-
-" Color scheme
-colorscheme railscasts
-highlight LineNr guibg=#111111 ctermfg=DarkGrey
-highlight CursorLineNr guibg=#111111 guifg=Grey ctermfg=DarkGrey
-set nocursorline
-
 if has("gui_running")
-
   if has("gui_gtk2")
     set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 14
   elseif has("gui_macvim")
@@ -145,13 +144,6 @@ let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 " Index ctags from any project, including those outside Rails
 map <Leader>ct :!ctags -R .<CR>
 
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
 " fixes common typos; Mapira č, ; i Č u : za komande
 nnoremap - /
 nmap š [
@@ -184,10 +176,11 @@ imap <F10> <esc>:TagbarToggle<cr>
 " let NERDTreeChDirMode=2
 " let NERDTreeIgnore = ['\.pyc$', '\.ntx$', '\.dbf$', '\.dbt$', '\.DBF$', '\.NTX$', '\.DBT$', '\.NTX$', '\.ntx$']
 " nmap <leader>n :NERDTreeToggle<CR>
-nmap <leader>n :Lex<CR>
+" nmap <leader>n :Lex<CR>
+nmap <Leader>:Fern . -drawer<CR>
 
 " Custom ignores for CtrlP
-let g:ctrlp_custom_ignore = '\v.DS_Store|.sass-cache|.bundle|dcu|log|tmp|.git|private|.hg|.svn|node_modules|vendor|bower_components$'
+let g:ctrlp_custom_ignore = '\v.DS_Store|.sass-cache|.bundle|dcu|log|tmp|.git|private|.hg|.idea|.vscode|.svn|node_modules|vendor|bower_components$'
 " Command-F for Ack
 map <C-f> :Ack<space>
 
@@ -199,15 +192,6 @@ let g:rails_menu=1
 noremap  <silent> <C-S> :update<CR>
 vnoremap <silent> <C-S> <C-C>:update<CR>
 inoremap <silent> <C-S> <C-O>:update<CR>
-
-"mark syntax errors with :signs
-"let g:syntastic_enable_signs=1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_ruby_checkers = ['mri']
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
 " same indent behaviour in visual mode
 vmap > >gv
@@ -239,17 +223,27 @@ nmap <F5> :Make<CR>:copen<CR>
 nmap <C-B> :Make<CR>:copen<CR>
 
 " Cool things from Janus
-cmap w!! %!sudo tee > /dev/null % " use :w!! to write using sudo
-nmap <leader>fef ggVG=            " format the entire file
-nmap <silent><leader>. :bnext<CR> " Next buffer
-nmap <silent><leader>m :bprev<CR> " Previous buffer
-nmap <leader>U mQviwU`Q           " UPPER word
-nmap <leader>L mQviwu`Q           " lower word
+" use :w!! to write using sudo
+cmap w!! %!sudo tee > /dev/null %
+" format the entire file
+nmap <leader>fef ggVG=
+" Next buffer
+nmap <silent><leader>. :bnext<CR>
+" Previous buffer
+nmap <silent><leader>m :bprev<CR>
+" UPPER word
+nmap <leader>U mQviwU`Q
+" lower word
+nmap <leader>L mQviwu`Q
 
-nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`' " Swap two words
-nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>              " Underline the current line with '='
-nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>         " find merge conflict markers
-cmap <C-P> <C-R>=expand("%:p:h") . "/"                         " current dir into a command-line path
+" Swap two words
+nmap <silent> gw :s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR>`'
+" Underline the current line with '='
+nmap <silent> <leader>ul :t.\|s/./=/g\|:nohls<cr>
+" find merge conflict markers
+nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+" current dir into a command-line path
+cmap <C-P> <C-R>=expand("%:p:h") . "/"
 
 if executable('ag')
   nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>
@@ -265,8 +259,9 @@ if executable('rg')
   nnoremap <Leader>g :silent lgrep<Space>
   let g:ackprg="rg --vimgrep --no-heading --smart-case"
   set grepformat=%f:%l%c%m
-  " Use ag over grep
+  " Use rg over grep
   set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+	command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 endif
 
 " Javascripting
@@ -274,6 +269,7 @@ let g:jsx_ext_required = 0
 "let g:syntastic_javascript_checkers = ['eslint']
 
 " ALE
+let g:ale_disable_lsp= 1
 let g:ale_completion_enabled = 1
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'never'
@@ -281,15 +277,19 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
+highlight ALEError ctermbg=none cterm=underline
 let g:ale_linters = {
-  \  'ruby': ['solargraph'],
-  \  'python': ['flake8', 'pylint'],
-  \  'javascript': ['prettier', 'eslint'],
-  \}
-
+			\  'ruby': ['rubocop'],
+  		\  'python': ['flake8', 'pylint'],
+  		\  'javascript': ['prettier', 'eslint'],
+  		\}
+let g:ale_fixers = {
+			\ 'javascript': ['prettier', 'eslint'],
+			\ 'ruby': ['rubocop'],
+			\}
 " Lightline
 let g:lightline = {
-\ 'colorscheme': 'wombat',
+\ 'colorscheme': 'ayu',
 \ 'active': {
 \   'left': [['mode', 'paste'], ['filename', 'modified']],
 \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
@@ -327,17 +327,93 @@ function! LightlineLinterOK() abort
   return l:counts.total == 0 ? '✨ all good ✨' : ''
 endfunction
 
-map <C-p> :GFiles<CR>
-
-" Snipet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
+map <C-p> :Files<CR>
+map <C-F> :Rg<CR>
 
 " FZF
-" Always enable preview window on the right with 60% width
-let g:fzf_preview_window = 'right:60%'
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 autocmd! FileType fzf set laststatus=0 noshowmode noruler | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_smartcase = 1
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+"nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Autparis
+let g:AutoPairsShortcutToggle = '<Leader>a'
+
+" Vim-test
+let test#strategy = "dispatch"
+
+" WhichKey
+nnoremap <silent> <Space> :WhichKey ','<CR>
+vnoremap <silent> <Leader> :silent <c-u> :silent WhichKeyVisual ','<CR>
+set timeoutlen=200
+
+let g:which_key_map =  {}
+"let g:which_key_use_floating_win = 1
+let g:which_key_fallback_to_native_key = 1
+
+" Single mappings
+let g:which_key_map['/'] = [ ':TComment'                        , 'comment' ]
+let g:which_key_map['f'] = [ ':Files'                           , 'search files' ]
+let g:which_key_map['h'] = [ '<C-W>s'                           , 'split below']
+let g:which_key_map['n'] = [ ':Fern . -drawer'              , 'Fern file browser']
+"let g:which_key_map['S'] = [ ':Startify'                        , 'start screen' ]
+let g:which_key_map['r'] = [ ':Rg'                              , 'search text' ]
+"let g:which_key_map['E'] = [ ':SSave'                           , 'save session']
+"let g:which_key_map['L'] = [ ':SLoad'                           , 'load session']
+"let g:which_key_map['r'] = [ ':RnvimrToggle'                    , 'ranger' ]
+let g:which_key_map['g'] = [ ':FloatermNew lazygit'             , 'git']
+let g:which_key_map['d'] = [ ':FloatermNew lazydocker'          , 'docker']
+"let g:which_key_map['k'] = [ ':FloatermNew k9s'                 , 'k9s']
+let g:which_key_map['T'] = [ ':botright term'                     , 'terminal']
+let g:which_key_map['v'] = [ '<C-W>v'                           , 'split right']
+let g:which_key_map['m'] = [ 'ggVG=', 'format file' ]
+" s is for search
+let g:which_key_map.s = {
+      \ 'name' : '+search' ,
+      \ '/' : [':History/'                 , 'history'],
+      \ ';' : [':Commands'                 , 'commands'],
+      \ 'a' : [':Ag'                       , 'text Ag'],
+      \ 'b' : [':BLines'                   , 'current buffer'],
+      \ 'B' : [':Buffers'                  , 'open buffers'],
+      \ 'c' : [':Commits'                  , 'commits'],
+      \ 'C' : [':BCommits'                 , 'buffer commits'],
+      \ 'f' : [':Files'                    , 'files'],
+      \ 'g' : [':GFiles'                   , 'git files'],
+      \ 'G' : [':GFiles?'                  , 'modified git files'],
+      \ 'h' : [':History'                  , 'file history'],
+      \ 'H' : [':History:'                 , 'command history'],
+      \ 'l' : [':Lines'                    , 'lines'] ,
+      \ 'm' : [':Marks'                    , 'marks'] ,
+      \ 'M' : [':Maps'                     , 'normal maps'] ,
+      \ 'p' : [':Helptags'                 , 'help tags'] ,
+      \ 'P' : [':Tags'                     , 'project tags'],
+      \ 's' : [':CocList snippets'         , 'snippets'],
+      \ 'S' : [':Colors'                   , 'color schemes'],
+      \ 't' : [':Rg'                       , 'Rg text'],
+      \ 'T' : [':BTags'                    , 'buffer tags'],
+      \ 'w' : [':Windows'                  , 'search windows'],
+      \ 'y' : [':Filetypes'                , 'file types'],
+      \ 'z' : [':FZF'                      , 'FZF'],
+      \ }
+
+" P is for vim-plug
+let g:which_key_map.p = {
+      \ 'name' : '+plug' ,
+      \ 'i' : [':PlugInstall'              , 'install'],
+      \ 'u' : [':PlugUpdate'               , 'update'],
+      \ 'c' : [':PlugClean'                , 'clean'],
+      \ }
+"     \ 's' : [':source ~/.config/nvim/init.vim', 'source vimrc'],
+
+" Register which key map
+call which_key#register(',', "g:which_key_map")
 
